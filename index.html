@@ -1,0 +1,2727 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>GROUP BOARD</title>
+
+<style>
+*{box-sizing:border-box}
+
+:root{
+ --bg:#070b16;
+ --card:#111827;
+ --card2:#182033;
+ --border:#29354d;
+ --text:#fff;
+ --muted:#9ca3af;
+ --purple:#8b5cf6;
+ --pink:#ec4899;
+ --green:#22c55e;
+ --red:#ef4444;
+ --yellow:#f59e0b;
+}
+
+body{
+ margin:0;
+ color:var(--text);
+ background:
+ radial-gradient(circle at 10% 10%,#7c3aed33,transparent 30%),
+ radial-gradient(circle at 90% 90%,#ec489933,transparent 30%),
+ var(--bg);
+ font-family:Arial,"Noto Sans Thai",sans-serif;
+}
+
+button,input,textarea{font:inherit}
+button{cursor:pointer}
+.hidden{display:none!important}
+
+/* LOGIN */
+
+#loginPage{
+ min-height:100vh;
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ padding:20px;
+}
+
+.login-card{
+ width:100%;
+ max-width:430px;
+ padding:40px;
+ background:#111827ee;
+ border:1px solid #34405b;
+ border-radius:25px;
+ box-shadow:0 30px 100px #000b;
+ backdrop-filter:blur(20px);
+}
+
+.logo{
+ text-align:center;
+ font-size:30px;
+ font-weight:900;
+}
+
+.logo span,.brand span{color:#a78bfa}
+
+.login-sub{
+ text-align:center;
+ color:var(--muted);
+ margin:8px 0 30px;
+}
+
+.login-card label{
+ display:block;
+ margin:15px 0 7px;
+}
+
+.login-card input{
+ width:100%;
+ padding:14px;
+ border-radius:12px;
+ border:1px solid var(--border);
+ background:#080d19;
+ color:white;
+ outline:none;
+}
+
+.login-card input:focus{
+ border-color:var(--purple);
+}
+
+.login-btn{
+ width:100%;
+ margin-top:20px;
+ padding:14px;
+ border:0;
+ border-radius:12px;
+ color:white;
+ font-weight:bold;
+ background:linear-gradient(135deg,var(--purple),var(--pink));
+}
+
+.login-error{
+ min-height:22px;
+ color:#fb7185;
+ text-align:center;
+ margin-top:12px;
+}
+
+/* HEADER */
+
+header{
+ height:70px;
+ display:flex;
+ align-items:center;
+ justify-content:space-between;
+ padding:0 25px;
+ position:sticky;
+ top:0;
+ z-index:20;
+ background:#0c1220ee;
+ border-bottom:1px solid var(--border);
+ backdrop-filter:blur(15px);
+}
+
+.brand{
+ font-size:22px;
+ font-weight:900;
+}
+
+.header-right{
+ display:flex;
+ align-items:center;
+ gap:15px;
+}
+
+.logout{
+ border:1px solid var(--border);
+ background:#20293a;
+ color:white;
+ border-radius:9px;
+ padding:8px 13px;
+}
+
+/* LAYOUT */
+
+.layout{
+ display:grid;
+ grid-template-columns:235px 1fr;
+ min-height:calc(100vh - 70px);
+}
+
+aside{
+ background:#0a101c;
+ border-right:1px solid var(--border);
+ padding:15px;
+}
+
+.nav{
+ width:100%;
+ padding:13px;
+ margin-bottom:5px;
+ border:0;
+ border-radius:10px;
+ color:#9ca3af;
+ background:transparent;
+ text-align:left;
+}
+
+.nav:hover,.nav.active{
+ color:white;
+ background:linear-gradient(90deg,#7c3aed44,#ec489922);
+}
+
+main{
+ width:100%;
+ max-width:1250px;
+ margin:auto;
+ padding:35px;
+}
+
+.page-title h1{margin:0;font-size:30px}
+.page-title p{color:var(--muted)}
+
+/* STATS */
+
+.stats{
+ display:grid;
+ grid-template-columns:repeat(4,1fr);
+ gap:15px;
+ margin:25px 0;
+}
+
+.stat{
+ background:var(--card);
+ border:1px solid var(--border);
+ border-radius:17px;
+ padding:22px;
+}
+
+.stat small{
+ color:var(--muted);
+ display:block;
+ margin-bottom:10px;
+}
+
+.stat strong{font-size:32px}
+
+.progress{
+ height:9px;
+ background:#29354d;
+ border-radius:20px;
+ overflow:hidden;
+ margin-top:12px;
+}
+
+.progress-bar{
+ width:0;
+ height:100%;
+ background:linear-gradient(90deg,var(--purple),var(--pink));
+ transition:.5s;
+}
+
+/* PANELS */
+
+.panel,.item,.admin-panel{
+ background:var(--card);
+ border:1px solid var(--border);
+ border-radius:17px;
+ padding:20px;
+ margin-bottom:15px;
+}
+
+.task{
+ background:var(--card2);
+ border:1px solid var(--border);
+ border-radius:12px;
+ padding:15px;
+ margin:10px 0;
+}
+
+.row{
+ display:flex;
+ justify-content:space-between;
+ align-items:center;
+ gap:10px;
+}
+
+.badge{
+ padding:5px 10px;
+ border-radius:20px;
+ background:#374151;
+ font-size:12px;
+}
+
+.badge.done{background:#166534}
+.badge.working{background:#854d0e}
+
+.small-btn{
+ border:0;
+ border-radius:8px;
+ padding:7px 10px;
+ background:#374151;
+ color:white;
+ margin-top:10px;
+}
+
+.delete-btn{background:#991b1b}
+
+.admin-panel input,
+.admin-panel textarea{
+ display:block;
+ width:100%;
+ margin:10px 0;
+ padding:12px;
+ border:1px solid var(--border);
+ border-radius:10px;
+ background:#080d19;
+ color:white;
+}
+
+.admin-panel textarea{min-height:100px}
+
+.primary{
+ border:0;
+ padding:11px 18px;
+ border-radius:10px;
+ color:white;
+ font-weight:bold;
+ background:linear-gradient(135deg,var(--purple),var(--pink));
+}
+
+/* THANKS */
+
+.thanks{
+ text-align:center;
+ padding:60px 25px;
+ border-radius:25px;
+ background:linear-gradient(135deg,#7c3aed22,#ec489922),var(--card);
+ border:1px solid #4c3a70;
+ font-size:25px;
+ line-height:1.8;
+}
+
+.thanks-icon{font-size:70px}
+
+/* MESSAGE */
+
+.message{
+ background:var(--card);
+ border:1px solid var(--border);
+ border-radius:15px;
+ padding:18px;
+ margin-bottom:12px;
+}
+
+.message-date{
+ color:var(--muted);
+ font-size:12px;
+}
+
+.reply{
+ background:#251c3b;
+ border-left:3px solid var(--purple);
+ padding:12px;
+ border-radius:8px;
+ margin-top:12px;
+}
+
+/* WHEEL */
+
+.wheel-status{margin-bottom:15px}
+
+.wheel-panel{
+ text-align:center;
+ padding:30px 20px;
+ border:1px solid var(--border);
+ border-radius:25px;
+ background:radial-gradient(circle at center,#7c3aed22,transparent 45%),var(--card);
+}
+
+.wheel-container{
+ width:min(500px,90vw);
+ aspect-ratio:1;
+ position:relative;
+ margin:20px auto 30px;
+}
+
+#wheelCanvas{
+ width:100%;
+ height:100%;
+ border-radius:50%;
+ border:7px solid white;
+ box-shadow:0 20px 70px #000b;
+ transform:rotate(0deg);
+}
+
+.pointer{
+ position:absolute;
+ z-index:5;
+ top:-7px;
+ left:50%;
+ transform:translateX(-50%);
+ width:0;
+ height:0;
+ border-left:23px solid transparent;
+ border-right:23px solid transparent;
+ border-top:58px solid #ef4444;
+ filter:drop-shadow(0 5px 5px #0008);
+}
+
+.wheel-center{
+ position:absolute;
+ z-index:4;
+ width:70px;
+ height:70px;
+ left:50%;
+ top:50%;
+ transform:translate(-50%,-50%);
+ border-radius:50%;
+ background:white;
+ color:#111;
+ border:7px solid #374151;
+ display:grid;
+ place-items:center;
+ font-size:27px;
+}
+
+.spin-btn{
+ padding:15px 45px;
+ border:0;
+ border-radius:13px;
+ color:white;
+ font-size:20px;
+ font-weight:bold;
+ background:linear-gradient(135deg,#7c3aed,#ec4899);
+}
+
+.spin-btn:disabled{
+ opacity:.4;
+ cursor:not-allowed;
+}
+
+.proof{
+ max-width:700px;
+ margin:25px auto;
+ padding:15px;
+ border-radius:12px;
+ color:#fde68a;
+ background:#422006;
+ border:1px solid #92400e;
+ line-height:1.8;
+}
+
+.prizes{
+ max-width:700px;
+ margin:auto;
+ display:grid;
+ grid-template-columns:repeat(2,1fr);
+ gap:10px;
+}
+
+.prize{
+ padding:12px;
+ border-radius:10px;
+ background:var(--card2);
+ border:1px solid var(--border);
+}
+
+/* MODAL */
+
+.modal{
+ position:fixed;
+ inset:0;
+ z-index:100;
+ display:grid;
+ place-items:center;
+ padding:20px;
+ background:#000c;
+}
+
+.modal-card{
+ width:min(430px,100%);
+ padding:35px;
+ text-align:center;
+ background:#111827;
+ border:1px solid #39445d;
+ border-radius:25px;
+ box-shadow:0 30px 100px #000;
+ animation:popup .3s ease;
+}
+
+.modal-icon{font-size:75px}
+
+.modal-prize{
+ font-size:28px;
+ font-weight:bold;
+ margin:15px 0;
+}
+
+@keyframes popup{
+ from{opacity:0;transform:scale(.7)}
+ to{opacity:1;transform:scale(1)}
+}
+
+/* MOBILE */
+
+@media(max-width:850px){
+
+ .layout{grid-template-columns:1fr}
+
+ aside{
+  display:flex;
+  overflow-x:auto;
+  border-right:0;
+  border-bottom:1px solid var(--border);
+ }
+
+ .nav{min-width:max-content}
+
+ .stats{grid-template-columns:repeat(2,1fr)}
+
+ main{padding:20px}
+}
+
+@media(max-width:500px){
+
+ header{padding:0 12px}
+
+ .brand{font-size:18px}
+
+ #userRole{display:none}
+
+ .stats{grid-template-columns:1fr}
+
+ main{padding:14px}
+
+ .login-card{padding:25px}
+
+ .prizes{grid-template-columns:1fr}
+}
+</style>
+</head>
+
+<body>
+
+<!-- LOGIN -->
+
+<div id="loginPage">
+
+ <div class="login-card">
+
+  <div class="logo">
+   GROUP<span>BOARD</span>
+  </div>
+
+  <div class="login-sub">
+   ระบบจัดการงานกลุ่ม
+  </div>
+
+  <label>เลขประจำตัว / ชื่อผู้ดูแล</label>
+
+  <input
+   id="username"
+   autocomplete="username"
+   placeholder="กรอกเลขประจำตัว"
+  >
+
+  <label>รหัสผ่าน</label>
+
+  <input
+   id="password"
+   type="password"
+   autocomplete="current-password"
+   placeholder="กรอกรหัสผ่าน"
+  >
+
+  <button
+   class="login-btn"
+   onclick="login()"
+  >
+   เข้าสู่ระบบ
+  </button>
+
+  <div
+   id="loginError"
+   class="login-error"
+  ></div>
+
+ </div>
+
+</div>
+
+
+<!-- APP -->
+
+<div id="app" class="hidden">
+
+<header>
+
+ <div class="brand">
+  GROUP<span>BOARD</span>
+ </div>
+
+ <div class="header-right">
+
+  <span id="userRole"></span>
+
+  <button
+   class="logout"
+   onclick="logout()"
+  >
+   ออกจากระบบ
+  </button>
+
+ </div>
+
+</header>
+
+
+<div class="layout">
+
+<aside>
+
+ <button class="nav active" data-page="dashboard">
+  📊 ภาพรวมงาน
+ </button>
+
+ <button class="nav" data-page="meetings">
+  📅 การนัดหมาย
+ </button>
+
+ <button class="nav" data-page="documents">
+  📄 เอกสาร
+ </button>
+
+ <button class="nav" data-page="thanks">
+  💖 ข้อความขอบคุณ
+ </button>
+
+ <button class="nav" data-page="messages">
+  💬 ข้อความตอบกลับ
+ </button>
+
+ <button class="nav" data-page="rewards">
+  🎁 สุ่มรางวัล
+ </button>
+
+</aside>
+
+
+<main>
+
+<!-- DASHBOARD -->
+
+<section id="dashboard" class="page">
+
+ <div class="page-title">
+  <h1>ภาพรวมงาน</h1>
+  <p>ติดตามความคืบหน้าของงานกลุ่ม</p>
+ </div>
+
+ <div class="stats">
+
+  <div class="stat">
+   <small>งานทั้งหมด</small>
+   <strong id="totalTasks">0</strong>
+  </div>
+
+  <div class="stat">
+   <small>งานสำเร็จแล้ว</small>
+   <strong id="completedTasks">0</strong>
+  </div>
+
+  <div class="stat">
+   <small>กำลังทำ</small>
+   <strong id="workingTasks">0</strong>
+  </div>
+
+  <div class="stat">
+   <small>เปอร์เซ็นต์สำเร็จ</small>
+   <strong id="taskPercent">0%</strong>
+
+   <div class="progress">
+    <div id="progressBar" class="progress-bar"></div>
+   </div>
+  </div>
+
+ </div>
+
+ <div class="panel">
+
+  <h3>รายการงาน</h3>
+
+  <div id="taskList"></div>
+
+ </div>
+
+</section>
+
+
+<!-- MEETINGS -->
+
+<section id="meetings" class="page hidden">
+
+ <h1>📅 การนัดหมาย</h1>
+ <p>กำหนดและติดตามการนัดหมายของกลุ่ม</p>
+
+ <div id="meetingAdmin"></div>
+ <div id="meetingList"></div>
+
+</section>
+
+
+<!-- DOCUMENTS -->
+
+<section id="documents" class="page hidden">
+
+ <h1>📄 เอกสาร</h1>
+ <p>รวมเอกสารและไฟล์สำคัญ</p>
+
+ <div id="documentAdmin"></div>
+ <div id="documentList"></div>
+
+</section>
+
+
+<!-- THANKS -->
+
+<section id="thanks" class="page hidden">
+
+ <h1>💖 ข้อความขอบคุณ</h1>
+
+ <div id="thanksAdmin"></div>
+
+ <div class="thanks">
+
+  <div class="thanks-icon">💖</div>
+
+  <div id="thanksText"></div>
+
+ </div>
+
+</section>
+
+
+<!-- MESSAGES -->
+
+<section id="messages" class="page hidden">
+
+ <h1>💬 ข้อความตอบกลับ</h1>
+
+ <p>ติดต่อและพูดคุยกับ Admin</p>
+
+ <div id="messageForm"></div>
+ <div id="messageList"></div>
+
+</section>
+
+
+<!-- REWARDS -->
+
+<section id="rewards" class="page hidden">
+
+ <h1>🎁 วงล้อสุ่มรางวัล</h1>
+
+ <p>ลุ้นรับรางวัลจากวงล้อ</p>
+
+ <div id="wheelStatus"></div>
+
+ <div class="wheel-panel">
+
+  <div class="wheel-container">
+
+   <div class="pointer"></div>
+
+   <canvas
+    id="wheelCanvas"
+    width="500"
+    height="500"
+   ></canvas>
+
+   <div class="wheel-center">🎁</div>
+
+  </div>
+
+  <button
+   id="spinButton"
+   class="spin-btn"
+   onclick="spinWheel()"
+  >
+   🎡 หมุนวงล้อ
+  </button>
+
+  <div class="proof">
+
+   <strong>
+    📢 เมื่อท่านได้รับรางวัลกรุณาแสดงหลักฐาน
+   </strong>
+
+   <br>
+
+   กรุณาแสดงหลักฐานแก่ Admin เพื่อรับรางวัล
+
+  </div>
+
+  <div id="prizes" class="prizes"></div>
+
+ </div>
+
+ <div id="wheelAdmin"></div>
+
+</section>
+
+</main>
+
+</div>
+</div>
+
+
+<!-- RESULT -->
+
+<div id="resultModal" class="modal hidden">
+
+ <div class="modal-card">
+
+  <div id="resultIcon" class="modal-icon">🎉</div>
+
+  <h2 id="resultTitle">ยินดีด้วย!</h2>
+
+  <div id="resultPrize" class="modal-prize"></div>
+
+  <p id="resultMessage"></p>
+
+  <button
+   class="primary"
+   onclick="closeResult()"
+  >
+   ตกลง
+  </button>
+
+ </div>
+
+</div>
+
+
+<script>
+
+/* =====================================================
+ข้อมูลระบบ
+===================================================== */
+
+const DEFAULT_DATA={
+
+ /* LOGIN */
+
+ users:[
+
+  /* สมาชิก */
+
+  {
+   username:"1",
+   password:"PASS1234",
+   role:"user"
+  },
+
+  {
+   username:"3",
+   password:"PASS1234",
+   role:"user"
+  },
+
+  {
+   username:"4",
+   password:"PASS1234",
+   role:"user"
+  },
+
+  {
+   username:"5",
+   password:"PASS1234",
+   role:"user"
+  },
+
+  {
+   username:"8",
+   password:"PASS1234",
+   role:"user"
+  },
+
+  {
+   username:"9",
+   password:"PASS1234",
+   role:"user"
+  },
+
+  {
+   username:"10",
+   password:"PASS1234",
+   role:"user"
+  },
+
+  {
+   username:"11",
+   password:"PASS1234",
+   role:"user"
+  },
+
+  {
+   username:"16",
+   password:"PASS1234",
+   role:"user"
+  },
+
+  {
+   username:"18",
+   password:"PASS1234",
+   role:"user"
+  },
+
+  /* ADMIN */
+
+  {
+   username:"Martiny",
+   password:"142536",
+   role:"admin"
+  }
+
+ ],
+
+
+ /* งาน */
+
+ tasks:[
+
+  {
+   id:1,
+   title:"วางแผนงาน",
+   status:"done"
+  },
+
+  {
+   id:2,
+   title:"รวบรวมข้อมูล",
+   status:"done"
+  },
+
+  {
+   id:3,
+   title:"จัดทำผลงาน",
+   status:"working"
+  },
+
+  {
+   id:4,
+   title:"ตรวจสอบและส่งงาน",
+   status:"todo"
+  }
+
+ ],
+
+
+ meetings:[],
+
+ documents:[],
+
+ thanks:
+ "ขอบคุณสมาชิกทุกคนที่ร่วมมือกันทำงานอย่างเต็มที่ ❤️",
+
+ messages:[],
+
+
+ /* วงล้อ */
+
+ wheel:{
+
+  enabled:true,
+
+  start:"",
+  end:"",
+
+  prizes:[
+
+   {
+    label:"เงิน 20 บาท",
+    icon:"💵",
+    weight:35
+   },
+
+   {
+    label:"เงิน 50 บาท",
+    icon:"💰",
+    weight:5
+   },
+
+   {
+    label:"เงิน 1 รางวัล",
+    icon:"🎁",
+    weight:10
+   },
+
+   {
+    label:"ขนม",
+    icon:"🍫",
+    weight:25
+   },
+
+   {
+    label:"ไม่ได้รับรางวัล",
+    icon:"🙂",
+    weight:25
+   }
+
+  ]
+
+ }
+
+};
+
+
+/* =====================================================
+โหลดข้อมูล
+===================================================== */
+
+let data=
+ JSON.parse(
+  localStorage.getItem("GROUPBOARD_DATA")
+ )
+ ||
+ JSON.parse(
+  JSON.stringify(DEFAULT_DATA)
+ );
+
+
+let currentUser=null;
+
+let spinning=false;
+
+
+/* =====================================================
+บันทึก
+===================================================== */
+
+function saveData(){
+
+ localStorage.setItem(
+  "GROUPBOARD_DATA",
+  JSON.stringify(data)
+ );
+
+}
+
+
+/* =====================================================
+ป้องกัน HTML
+===================================================== */
+
+function escapeHTML(value){
+
+ return String(value ?? "")
+  .replace(/&/g,"&amp;")
+  .replace(/</g,"&lt;")
+  .replace(/>/g,"&gt;")
+  .replace(/"/g,"&quot;")
+  .replace(/'/g,"&#039;");
+
+}
+
+
+function isAdmin(){
+
+ return currentUser &&
+ currentUser.role==="admin";
+
+}
+
+
+/* =====================================================
+LOGIN
+===================================================== */
+
+function login(){
+
+ const username=
+  document
+   .getElementById("username")
+   .value
+   .trim();
+
+ const password=
+  document
+   .getElementById("password")
+   .value;
+
+
+ const user=
+  data.users.find(
+   x=>
+    x.username===username &&
+    x.password===password
+  );
+
+
+ if(!user){
+
+  document.getElementById(
+   "loginError"
+  ).textContent=
+   "ข้อมูลเข้าสู่ระบบไม่ถูกต้อง";
+
+  return;
+
+ }
+
+
+ currentUser=user;
+
+
+ document
+  .getElementById("loginPage")
+  .classList.add("hidden");
+
+
+ document
+  .getElementById("app")
+  .classList.remove("hidden");
+
+
+ document.getElementById(
+  "userRole"
+ ).textContent=
+  user.role==="admin"
+  ? "🔐 Admin"
+  : "👤 สมาชิก";
+
+
+ renderAll();
+
+}
+
+
+/* =====================================================
+LOGOUT
+===================================================== */
+
+function logout(){
+
+ currentUser=null;
+
+ document
+  .getElementById("app")
+  .classList.add("hidden");
+
+ document
+  .getElementById("loginPage")
+  .classList.remove("hidden");
+
+ document.getElementById(
+  "username"
+ ).value="";
+
+ document.getElementById(
+  "password"
+ ).value="";
+
+}
+
+
+/* =====================================================
+NAV
+===================================================== */
+
+document
+ .querySelectorAll(".nav")
+ .forEach(button=>{
+
+  button.addEventListener(
+   "click",
+   ()=>{
+
+    const page=
+     button.dataset.page;
+
+
+    document
+     .querySelectorAll(".page")
+     .forEach(
+      x=>x.classList.add("hidden")
+     );
+
+
+    document
+     .getElementById(page)
+     .classList.remove("hidden");
+
+
+    document
+     .querySelectorAll(".nav")
+     .forEach(
+      x=>x.classList.remove("active")
+     );
+
+
+    button.classList.add("active");
+
+
+    renderAll();
+
+   }
+  );
+
+ });
+
+
+/* =====================================================
+TASK
+===================================================== */
+
+function renderTasks(){
+
+ const total=
+  data.tasks.length;
+
+ const completed=
+  data.tasks.filter(
+   x=>x.status==="done"
+  ).length;
+
+ const working=
+  data.tasks.filter(
+   x=>x.status==="working"
+  ).length;
+
+ const percent=
+  total
+  ? Math.round(completed/total*100)
+  : 0;
+
+
+ document.getElementById(
+  "totalTasks"
+ ).textContent=total;
+
+ document.getElementById(
+  "completedTasks"
+ ).textContent=completed;
+
+ document.getElementById(
+  "workingTasks"
+ ).textContent=working;
+
+ document.getElementById(
+  "taskPercent"
+ ).textContent=percent+"%";
+
+ document.getElementById(
+  "progressBar"
+ ).style.width=percent+"%";
+
+
+ let html="";
+
+
+ data.tasks.forEach(task=>{
+
+  let status="ยังไม่เริ่ม";
+  let cls="";
+
+  if(task.status==="working"){
+   status="กำลังทำ";
+   cls="working";
+  }
+
+  if(task.status==="done"){
+   status="สำเร็จ";
+   cls="done";
+  }
+
+
+  html+=`
+
+   <div class="task">
+
+    <div class="row">
+
+     <strong>
+      ${escapeHTML(task.title)}
+     </strong>
+
+     <span class="badge ${cls}">
+      ${status}
+     </span>
+
+    </div>
+
+    ${
+     isAdmin()
+     ?
+     `
+      <button
+       class="small-btn"
+       onclick="changeTask(${task.id})"
+      >
+       เปลี่ยนสถานะ
+      </button>
+
+      <button
+       class="small-btn delete-btn"
+       onclick="deleteTask(${task.id})"
+      >
+       ลบ
+      </button>
+     `
+     :
+     ""
+    }
+
+   </div>
+
+  `;
+
+ });
+
+
+ if(isAdmin()){
+
+  html+=`
+
+   <div class="admin-panel">
+
+    <h3>➕ เพิ่มงาน</h3>
+
+    <input
+     id="newTask"
+     placeholder="ชื่องาน"
+    >
+
+    <button
+     class="primary"
+     onclick="addTask()"
+    >
+     เพิ่มงาน
+    </button>
+
+   </div>
+
+  `;
+
+ }
+
+
+ document.getElementById(
+  "taskList"
+ ).innerHTML=html;
+
+}
+
+
+function addTask(){
+
+ const input=
+  document.getElementById("newTask");
+
+ const title=input.value.trim();
+
+ if(!title)return;
+
+
+ data.tasks.push({
+
+  id:Date.now(),
+
+  title:title,
+
+  status:"todo"
+
+ });
+
+
+ saveData();
+
+ renderTasks();
+
+}
+
+
+function changeTask(id){
+
+ const task=
+  data.tasks.find(
+   x=>x.id===id
+  );
+
+ if(!task)return;
+
+
+ if(task.status==="todo")
+  task.status="working";
+
+ else if(task.status==="working")
+  task.status="done";
+
+ else
+  task.status="todo";
+
+
+ saveData();
+
+ renderTasks();
+
+}
+
+
+function deleteTask(id){
+
+ if(
+  !confirm("ต้องการลบงานนี้หรือไม่?")
+ )return;
+
+
+ data.tasks=
+  data.tasks.filter(
+   x=>x.id!==id
+  );
+
+
+ saveData();
+
+ renderTasks();
+
+}
+
+
+/* =====================================================
+MEETING
+===================================================== */
+
+function renderMeetings(){
+
+ const admin=
+  document.getElementById(
+   "meetingAdmin"
+  );
+
+
+ if(isAdmin()){
+
+  admin.innerHTML=`
+
+   <div class="admin-panel">
+
+    <h3>➕ เพิ่มการนัดหมาย</h3>
+
+    <input
+     id="meetingTitle"
+     placeholder="หัวข้อ"
+    >
+
+    <input
+     id="meetingDate"
+     type="datetime-local"
+    >
+
+    <input
+     id="meetingPlace"
+     placeholder="สถานที่"
+    >
+
+    <textarea
+     id="meetingDetail"
+     placeholder="รายละเอียด"
+    ></textarea>
+
+    <button
+     class="primary"
+     onclick="addMeeting()"
+    >
+     เพิ่มการนัดหมาย
+    </button>
+
+   </div>
+
+  `;
+
+ }else{
+
+  admin.innerHTML="";
+
+ }
+
+
+ if(!data.meetings.length){
+
+  document.getElementById(
+   "meetingList"
+  ).innerHTML=`
+
+   <div class="item">
+    ยังไม่มีการนัดหมาย
+   </div>
+
+  `;
+
+  return;
+
+ }
+
+
+ document.getElementById(
+  "meetingList"
+ ).innerHTML=
+
+ data.meetings.map(
+  m=>`
+
+   <div class="item">
+
+    <h3>
+     📅 ${escapeHTML(m.title)}
+    </h3>
+
+    <p>
+     🕐 ${
+      m.date
+      ?
+      new Date(m.date)
+       .toLocaleString("th-TH")
+      :
+      "ไม่ระบุ"
+     }
+    </p>
+
+    <p>
+     📍 ${escapeHTML(m.place)}
+    </p>
+
+    <p>
+     ${escapeHTML(m.detail)}
+    </p>
+
+    ${
+     isAdmin()
+     ?
+     `
+      <button
+       class="small-btn delete-btn"
+       onclick="deleteMeeting(${m.id})"
+      >
+       ลบ
+      </button>
+     `
+     :
+     ""
+    }
+
+   </div>
+
+  `
+ ).join("");
+
+}
+
+
+function addMeeting(){
+
+ data.meetings.push({
+
+  id:Date.now(),
+
+  title:
+   document.getElementById(
+    "meetingTitle"
+   ).value,
+
+  date:
+   document.getElementById(
+    "meetingDate"
+   ).value,
+
+  place:
+   document.getElementById(
+    "meetingPlace"
+   ).value,
+
+  detail:
+   document.getElementById(
+    "meetingDetail"
+   ).value
+
+ });
+
+
+ saveData();
+
+ renderMeetings();
+
+}
+
+
+function deleteMeeting(id){
+
+ data.meetings=
+  data.meetings.filter(
+   x=>x.id!==id
+  );
+
+ saveData();
+
+ renderMeetings();
+
+}
+
+
+/* =====================================================
+DOCUMENT
+===================================================== */
+
+function renderDocuments(){
+
+ const admin=
+  document.getElementById(
+   "documentAdmin"
+  );
+
+
+ admin.innerHTML=
+  isAdmin()
+  ?
+  `
+
+   <div class="admin-panel">
+
+    <h3>➕ เพิ่มเอกสาร</h3>
+
+    <input
+     id="documentTitle"
+     placeholder="ชื่อเอกสาร"
+    >
+
+    <input
+     id="documentURL"
+     placeholder="ลิงก์เอกสาร"
+    >
+
+    <button
+     class="primary"
+     onclick="addDocument()"
+    >
+     เพิ่มเอกสาร
+    </button>
+
+   </div>
+
+  `
+  :
+  "";
+
+
+ if(!data.documents.length){
+
+  document.getElementById(
+   "documentList"
+  ).innerHTML=`
+
+   <div class="item">
+    ยังไม่มีเอกสาร
+   </div>
+
+  `;
+
+  return;
+
+ }
+
+
+ document.getElementById(
+  "documentList"
+ ).innerHTML=
+
+ data.documents.map(
+  d=>`
+
+   <div class="item">
+
+    <h3>
+     📄 ${escapeHTML(d.title)}
+    </h3>
+
+    <a
+     href="${escapeHTML(d.url)}"
+     target="_blank"
+     rel="noopener"
+     style="color:#c4b5fd"
+    >
+     เปิดเอกสาร ↗
+    </a>
+
+    ${
+     isAdmin()
+     ?
+     `
+      <br>
+
+      <button
+       class="small-btn delete-btn"
+       onclick="deleteDocument(${d.id})"
+      >
+       ลบ
+      </button>
+     `
+     :
+     ""
+    }
+
+   </div>
+
+  `
+ ).join("");
+
+}
+
+
+function addDocument(){
+
+ const title=
+  document.getElementById(
+   "documentTitle"
+  ).value.trim();
+
+ const url=
+  document.getElementById(
+   "documentURL"
+  ).value.trim();
+
+
+ if(!title||!url)return;
+
+
+ data.documents.push({
+
+  id:Date.now(),
+
+  title:title,
+
+  url:url
+
+ });
+
+
+ saveData();
+
+ renderDocuments();
+
+}
+
+
+function deleteDocument(id){
+
+ data.documents=
+  data.documents.filter(
+   x=>x.id!==id
+  );
+
+ saveData();
+
+ renderDocuments();
+
+}
+
+
+/* =====================================================
+THANKS
+===================================================== */
+
+function renderThanks(){
+
+ const admin=
+  document.getElementById(
+   "thanksAdmin"
+  );
+
+
+ admin.innerHTML=
+  isAdmin()
+  ?
+  `
+
+   <div class="admin-panel">
+
+    <h3>
+     แก้ไขข้อความขอบคุณ
+    </h3>
+
+    <textarea
+     id="thanksInput"
+    >${escapeHTML(data.thanks)}</textarea>
+
+    <button
+     class="primary"
+     onclick="saveThanks()"
+    >
+     บันทึก
+    </button>
+
+   </div>
+
+  `
+  :
+  "";
+
+
+ document.getElementById(
+  "thanksText"
+ ).textContent=data.thanks;
+
+}
+
+
+function saveThanks(){
+
+ data.thanks=
+  document.getElementById(
+   "thanksInput"
+  ).value;
+
+ saveData();
+
+ renderThanks();
+
+}
+
+
+/* =====================================================
+MESSAGES
+===================================================== */
+
+function renderMessages(){
+
+ const form=
+  document.getElementById(
+   "messageForm"
+  );
+
+
+ if(isAdmin()){
+
+  form.innerHTML=`
+
+   <div class="admin-panel">
+
+    <strong>
+     🔐 กล่องข้อความ Admin
+    </strong>
+
+    <p>
+     ตอบกลับข้อความจากสมาชิกได้ด้านล่าง
+    </p>
+
+   </div>
+
+  `;
+
+ }else{
+
+  form.innerHTML=`
+
+   <div class="admin-panel">
+
+    <h3>
+     ส่งข้อความถึง Admin
+    </h3>
+
+    <textarea
+     id="messageInput"
+     placeholder="พิมพ์ข้อความ..."
+    ></textarea>
+
+    <button
+     class="primary"
+     onclick="sendMessage()"
+    >
+     ส่งข้อความ
+    </button>
+
+   </div>
+
+  `;
+
+ }
+
+
+ const messages=
+  isAdmin()
+  ?
+  data.messages
+  :
+  data.messages.filter(
+   x=>x.user===currentUser.username
+  );
+
+
+ if(!messages.length){
+
+  document.getElementById(
+   "messageList"
+  ).innerHTML=`
+
+   <div class="item">
+    ยังไม่มีข้อความ
+   </div>
+
+  `;
+
+  return;
+
+ }
+
+
+ document.getElementById(
+  "messageList"
+ ).innerHTML=
+
+ messages
+ .slice()
+ .reverse()
+ .map(
+  m=>`
+
+   <div class="message">
+
+    <strong>
+     💬 สมาชิกเลขที่ ${escapeHTML(m.user)}
+    </strong>
+
+    <span class="message-date">
+     · ${escapeHTML(m.date)}
+    </span>
+
+    <p>
+     ${escapeHTML(m.text)}
+    </p>
+
+    ${
+     m.reply
+     ?
+     `
+      <div class="reply">
+
+       <strong>
+        Admin ตอบกลับ
+       </strong>
+
+       <p>
+        ${escapeHTML(m.reply)}
+       </p>
+
+      </div>
+     `
+     :
+     isAdmin()
+     ?
+     `
+      <input
+       id="reply-${m.id}"
+       placeholder="พิมพ์คำตอบ"
+       style="
+        width:100%;
+        padding:11px;
+        background:#080d19;
+        border:1px solid #29354d;
+        border-radius:9px;
+        color:white;
+        margin-top:10px;
+       "
+      >
+
+      <button
+       class="primary"
+       onclick="replyMessage(${m.id})"
+      >
+       ตอบกลับ
+      </button>
+     `
+     :
+     `
+      <span style="color:#9ca3af">
+       ⏳ รอ Admin ตอบกลับ
+      </span>
+     `
+    }
+
+   </div>
+
+  `
+ ).join("");
+
+}
+
+
+function sendMessage(){
+
+ const input=
+  document.getElementById(
+   "messageInput"
+  );
+
+ const text=
+  input.value.trim();
+
+
+ if(!text)return;
+
+
+ data.messages.push({
+
+  id:Date.now(),
+
+  user:
+   currentUser.username,
+
+  text:text,
+
+  reply:"",
+
+  date:
+   new Date()
+    .toLocaleString("th-TH")
+
+ });
+
+
+ saveData();
+
+ renderMessages();
+
+}
+
+
+function replyMessage(id){
+
+ const input=
+  document.getElementById(
+   "reply-"+id
+  );
+
+ const text=
+  input.value.trim();
+
+
+ if(!text)return;
+
+
+ const message=
+  data.messages.find(
+   x=>x.id===id
+  );
+
+
+ if(!message)return;
+
+
+ message.reply=text;
+
+
+ saveData();
+
+ renderMessages();
+
+}
+
+
+/* =====================================================
+WHEEL
+===================================================== */
+
+function wheelIsOpen(){
+
+ const w=data.wheel;
+
+ const now=Date.now();
+
+
+ if(!w.enabled)
+  return false;
+
+
+ if(
+  w.start &&
+  now<
+  new Date(w.start).getTime()
+ )
+  return false;
+
+
+ if(
+  w.end &&
+  now>
+  new Date(w.end).getTime()
+ )
+  return false;
+
+
+ return true;
+
+}
+
+
+/* =====================================================
+DRAW WHEEL
+===================================================== */
+
+function drawWheel(){
+
+ const canvas=
+  document.getElementById(
+   "wheelCanvas"
+  );
+
+ if(!canvas)return;
+
+
+ const ctx=
+  canvas.getContext("2d");
+
+
+ const center=250;
+ const radius=235;
+
+
+ ctx.clearRect(
+  0,
+  0,
+  500,
+  500
+ );
+
+
+ const colors=[
+  "#7c3aed",
+  "#2563eb",
+  "#16a34a",
+  "#ea580c",
+  "#64748b"
+ ];
+
+
+ const prizes=
+  data.wheel.prizes;
+
+
+ const total=
+  prizes.reduce(
+   (sum,p)=>
+    sum+Number(p.weight),
+   0
+  );
+
+
+ let angle=-Math.PI/2;
+
+
+ prizes.forEach(
+  (prize,index)=>{
+
+   const slice=
+    Number(prize.weight)/
+    total*
+    Math.PI*2;
+
+
+   ctx.beginPath();
+
+   ctx.moveTo(
+    center,
+    center
+   );
+
+   ctx.arc(
+    center,
+    center,
+    radius,
+    angle,
+    angle+slice
+   );
+
+   ctx.closePath();
+
+   ctx.fillStyle=
+    colors[
+     index%colors.length
+    ];
+
+   ctx.fill();
+
+   ctx.strokeStyle="#fff";
+   ctx.lineWidth=3;
+   ctx.stroke();
+
+
+   const middle=
+    angle+slice/2;
+
+
+   const x=
+    center+
+    Math.cos(middle)*
+    145;
+
+   const y=
+    center+
+    Math.sin(middle)*
+    145;
+
+
+   ctx.save();
+
+   ctx.translate(x,y);
+
+   ctx.rotate(
+    middle+Math.PI/2
+   );
+
+   ctx.fillStyle="#fff";
+
+   ctx.font=
+    "bold 17px Arial";
+
+   ctx.textAlign="center";
+
+   ctx.fillText(
+    prize.icon+" "+prize.label,
+    0,
+    0
+   );
+
+   ctx.restore();
+
+
+   angle+=slice;
+
+  }
+ );
+
+}
+
+
+/* =====================================================
+WHEEL RENDER
+===================================================== */
+
+function renderWheel(){
+
+ drawWheel();
+
+
+ const open=
+  wheelIsOpen();
+
+
+ document.getElementById(
+  "wheelStatus"
+ ).innerHTML=`
+
+  <div class="item">
+
+   <strong>
+    ${
+     open
+     ?
+     "🟢 วงล้อเปิดใช้งาน"
+     :
+     "🔴 วงล้อปิด"
+    }
+   </strong>
+
+   ${
+    data.wheel.start
+    ?
+    `
+     <p>
+      เปิด:
+      ${
+       new Date(
+        data.wheel.start
+       ).toLocaleString("th-TH")
+      }
+     </p>
+    `
+    :
+    ""
+   }
+
+   ${
+    data.wheel.end
+    ?
+    `
+     <p>
+      ปิด:
+      ${
+       new Date(
+        data.wheel.end
+       ).toLocaleString("th-TH")
+      }
+     </p>
+    `
+    :
+    ""
+   }
+
+  </div>
+
+ `;
+
+
+ document.getElementById(
+  "spinButton"
+ ).disabled=
+  !open||
+  spinning;
+
+
+ document.getElementById(
+  "prizes"
+ ).innerHTML=
+
+ data.wheel.prizes
+ .map(
+  p=>`
+
+   <div class="prize">
+
+    ${p.icon}
+
+    <strong>
+     ${escapeHTML(p.label)}
+    </strong>
+
+    <br>
+
+    <small>
+     โอกาส ${p.weight}%
+    </small>
+
+   </div>
+
+  `
+ )
+ .join("");
+
+
+ renderWheelAdmin();
+
+}
+
+
+/* =====================================================
+ADMIN WHEEL
+===================================================== */
+
+function renderWheelAdmin(){
+
+ const box=
+  document.getElementById(
+   "wheelAdmin"
+  );
+
+
+ if(!isAdmin()){
+
+  box.innerHTML="";
+
+  return;
+
+ }
+
+
+ box.innerHTML=`
+
+  <div class="admin-panel">
+
+   <h3>
+    ⚙️ ตั้งค่าวงล้อ
+   </h3>
+
+   <label>
+
+    <input
+     id="wheelEnabled"
+     type="checkbox"
+     style="width:auto"
+     ${
+      data.wheel.enabled
+      ?
+      "checked"
+      :
+      ""
+     }
+    >
+
+    เปิดใช้งานวงล้อ
+
+   </label>
+
+   <br><br>
+
+   <label>
+    เวลาเปิด
+   </label>
+
+   <input
+    id="wheelStart"
+    type="datetime-local"
+    value="${data.wheel.start}"
+   >
+
+   <label>
+    เวลาปิด
+   </label>
+
+   <input
+    id="wheelEnd"
+    type="datetime-local"
+    value="${data.wheel.end}"
+   >
+
+   <h4>
+    🎁 โอกาสรางวัล
+   </h4>
+
+   ${data.wheel.prizes.map(
+    (p,i)=>`
+
+     <label>
+      ${p.icon}
+      ${escapeHTML(p.label)}
+     </label>
+
+     <input
+      id="weight-${i}"
+      type="number"
+      min="0"
+      max="100"
+      value="${p.weight}"
+     >
+
+    `
+   ).join("")}
+
+   <button
+    class="primary"
+    onclick="saveWheelSettings()"
+   >
+    บันทึกการตั้งค่า
+   </button>
+
+  </div>
+
+ `;
+
+}
+
+
+/* =====================================================
+SAVE WHEEL
+===================================================== */
+
+function saveWheelSettings(){
+
+ const weights=
+  data.wheel.prizes.map(
+   (_,i)=>
+    Number(
+     document.getElementById(
+      "weight-"+i
+     ).value
+    )
+  );
+
+
+ const total=
+  weights.reduce(
+   (a,b)=>a+b,
+   0
+  );
+
+
+ if(total!==100){
+
+  alert(
+   "โอกาสรางวัลทั้งหมดต้องรวมกันเป็น 100%"
+  );
+
+  return;
+
+ }
+
+
+ data.wheel.enabled=
+  document.getElementById(
+   "wheelEnabled"
+  ).checked;
+
+
+ data.wheel.start=
+  document.getElementById(
+   "wheelStart"
+  ).value;
+
+
+ data.wheel.end=
+  document.getElementById(
+   "wheelEnd"
+  ).value;
+
+
+ data.wheel.prizes.forEach(
+  (p,i)=>{
+   p.weight=weights[i];
+  }
+ );
+
+
+ saveData();
+
+ renderWheel();
+
+}
+
+
+/* =====================================================
+SPIN
+===================================================== */
+
+function spinWheel(){
+
+ if(
+  spinning||
+  !wheelIsOpen()
+ )
+  return;
+
+
+ spinning=true;
+
+
+ const prizes=
+  data.wheel.prizes;
+
+
+ const total=
+  prizes.reduce(
+   (a,p)=>
+    a+Number(p.weight),
+   0
+  );
+
+
+ let random=
+  Math.random()*total;
+
+
+ let selected=0;
+
+
+ for(
+  let i=0;
+  i<prizes.length;
+  i++
+ ){
+
+  random-=
+   Number(
+    prizes[i].weight
+   );
+
+
+  if(random<0){
+
+   selected=i;
+
+   break;
+
+  }
+
+ }
+
+
+ let before=0;
+
+
+ for(
+  let i=0;
+  i<selected;
+  i++
+ ){
+
+  before+=
+   Number(
+    prizes[i].weight
+   );
+
+ }
+
+
+ const selectedWeight=
+  Number(
+   prizes[selected].weight
+  );
+
+
+ const centerPercent=
+  (
+   before+
+   selectedWeight/2
+  )/
+  total;
+
+
+ const target=
+  360-
+  centerPercent*360;
+
+
+ const rotation=
+  360*7+
+  target;
+
+
+ const canvas=
+  document.getElementById(
+   "wheelCanvas"
+  );
+
+
+ canvas.style.transition=
+  "transform 5s cubic-bezier(.12,.72,.08,1)";
+
+
+ canvas.style.transform=
+  `rotate(${rotation}deg)`;
+
+
+ setTimeout(
+  ()=>{
+
+   showResult(
+    prizes[selected]
+   );
+
+   spinning=false;
+
+  },
+  5200
+ );
+
+}
+
+
+/* =====================================================
+RESULT POPUP
+===================================================== */
+
+function showResult(prize){
+
+ const won=
+  prize.label!=="ไม่ได้รับรางวัล";
+
+
+ document.getElementById(
+  "resultIcon"
+ ).textContent=
+  won
+  ?
+  "🎉"
+  :
+  "😢";
+
+
+ document.getElementById(
+  "resultTitle"
+ ).textContent=
+  won
+  ?
+  "ยินดีด้วย!"
+  :
+  "เสียใจด้วย";
+
+
+ document.getElementById(
+  "resultPrize"
+ ).textContent=
+  prize.icon+" "+prize.label;
+
+
+ document.getElementById(
+  "resultMessage"
+ ).textContent=
+  won
+  ?
+  "เมื่อท่านได้รับรางวัลกรุณาแสดงหลักฐานแก่ Admin เพื่อรับรางวัล"
+  :
+  "ครั้งนี้คุณไม่ได้รับรางวัล ขอให้โชคดีในครั้งหน้า 💜";
+
+
+ document.getElementById(
+  "resultModal"
+ ).classList.remove("hidden");
+
+}
+
+
+function closeResult(){
+
+ document.getElementById(
+  "resultModal"
+ ).classList.add("hidden");
+
+}
+
+
+/* =====================================================
+RENDER ALL
+===================================================== */
+
+function renderAll(){
+
+ renderTasks();
+
+ renderMeetings();
+
+ renderDocuments();
+
+ renderThanks();
+
+ renderMessages();
+
+ renderWheel();
+
+}
+
+
+/* =====================================================
+ENTER
+===================================================== */
+
+document
+ .getElementById("password")
+ .addEventListener(
+  "keydown",
+  e=>{
+   if(e.key==="Enter")
+    login();
+  }
+);
+
+
+/* =====================================================
+เริ่มต้น
+===================================================== */
+
+saveData();
+
+</script>
+
+</body>
+</html>
